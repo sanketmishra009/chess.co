@@ -3,6 +3,8 @@ import React from "react";
 import useSWR from "swr";
 import { useState, useEffect, useMemo } from "react";
 import { io } from "socket.io-client";
+import { Chess } from "chess.js";
+import ChessBoard from "./_components/_chessBoard";
 
 const Page = () => {
   // console.log("inside");
@@ -22,7 +24,11 @@ const Page = () => {
       socket.disconnect();
     };
   }, []);
-  return <div>{resp}</div>;
+  return (
+    <div>
+      <ChessBoard />
+    </div>
+  );
 };
 
 export default Page;

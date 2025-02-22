@@ -4,6 +4,7 @@ const http = require("http");
 const { Chess } = require("chess.js");
 const path = require("path");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = 3000;
@@ -17,7 +18,13 @@ const port = 3000;
 //   next();
 // });
 
+//routes
+const authRouter = require("./routes/authRouter.js");
+
 app.use(cors());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const server = http.createServer(app);
 const io = socket(server, {
@@ -33,11 +40,32 @@ const currentPlayer = "w";
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  // res.render("index");
+app.get("/chess", (req, res) => {
   // console.log("request from", req);
-  res.send("Hello from the server");
+  // res.send("Hello from the server");
+  res.send("index page");
 });
+
+app.use("/auth", authRouter);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 io.on("connection", (socket) => {
   console.log("connected with socket.", socket.id);
